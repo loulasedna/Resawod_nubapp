@@ -6,30 +6,55 @@ import json
 import copy
 
 
+def get_session_id(session, id_application):
+    headers = {
+        'authority': 'sport.nubapp.com',
+        'pragma': 'no-cache',
+        'cache-control': 'no-cache',
+        'sec-ch-ua': '" Not;A Brand";v="99", "Google Chrome";v="91", "Chromium";v="91"',
+        'sec-ch-ua-mobile': '?0',
+        'upgrade-insecure-requests': '1',
+        'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36',
+        'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+        'sec-fetch-site': 'same-origin',
+        'sec-fetch-mode': 'navigate',
+        'sec-fetch-dest': 'document',
+        'referer': f'https://sport.nubapp.com/web/setApplication.php?id_application={id_application}',
+        'accept-language': 'fr-FR,fr;q=0.9',
+        'cookie': f'applicationId={id_application}',
+    }
+
+    params = (
+        ('id_application', id_application),
+        ('isIframe', 'false'),
+    )
+    return session.get('https://sport.nubapp.com/web/cookieChecker.php', headers=headers, params=params)
+
+
 def login(session, account, password):
 
     headers = {
-   'authority': 'sport.nubapp.com' ,
-   'accept': 'application/json, text/plain, */*' ,
-   'accept-language': 'fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7,ja;q=0.6' ,
-   'content-type': 'application/x-www-form-urlencoded' ,
-   'cookie': 'applicationId=21891030; PHPSESSID-FRONT=d4a351m2127qbm7u69oa39vr59' ,
-   'origin': 'https://sport.nubapp.com' ,
-   'referer': 'https://sport.nubapp.com/web/index.php' ,
-   'sec-ch-ua': '"Google Chrome";v="111",  "Chromium";v="111"' ,
-   'sec-ch-ua-mobile': '?1' ,
-   'sec-ch-ua-platform': '"Android"' ,
-   'sec-fetch-dest': 'empty' ,
-   'sec-fetch-mode': 'cors' ,
-   'sec-fetch-site': 'same-origin' ,
-   'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36' ,
-   'x-kl-ajax-request': 'Ajax_Request'
+        'authority': 'sport.nubapp.com',
+        'pragma': 'no-cache',
+        'cache-control': 'no-cache',
+        'sec-ch-ua': '" Not;A Brand";v="99", "Google Chrome";v="91", "Chromium";v="91"',
+        'accept': 'application/json, text/plain, */*',
+        'sec-ch-ua-mobile': '?0',
+        'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Mobile Safari/537.36',
+        'content-type': 'application/x-www-form-urlencoded',
+        'origin': 'https://sport.nubapp.com',
+        'sec-fetch-site': 'same-origin',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-dest': 'empty',
+        'referer': 'https://sport.nubapp.com/web/index.php',
+        'accept-language': 'fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7',
     }
 
     data = {
         'username': account,
         'password': password
     }
+
     return session.post('https://sport.nubapp.com/web/ajax/users/checkUser.php', headers=headers, data=data)
 
 def next_weekday(d, weekday):
@@ -107,6 +132,7 @@ def main(account, password):
     session = requests.Session()
     
     ## Login
+    sess_id = get_session_id(session, '21891030')
     res_login = login(session, account, password).json()
     id_application = res_login.get('resasocialAccountData').get('boundApplicationData').get('id_application')
 
@@ -115,8 +141,7 @@ def main(account, password):
 
     calendar = dict()
     # days = [('monday', 0), ('tuesday', 1), ('wednesday', 2), ('thursday', 3), ('friday', 4)]
-    # days = [ ('tuesday', 1), ('wednesday', 2), ('thursday', 3)]
-    days = [('saturday', 5)]
+    days = [ ('tuesday', 1), ('wednesday', 2), ('thursday', 3)]
     for t in days:
         weekday = next_weekday(d, t[1])
         search_start = datetime.datetime(weekday.year, weekday.month, weekday.day, start_h, start_min)
