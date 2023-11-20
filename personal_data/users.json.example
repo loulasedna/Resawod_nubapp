@@ -1,0 +1,14 @@
+{
+	"users": [
+		{
+			"name": "Bob",
+			"login": "bob@gmail.com",
+			"password": "super-duper-secret-password"
+		},
+		{
+			"name": "Alice",
+			"login": "alice@gmail.com",
+			"password": "nobody-cares"
+		}
+	]
+}
