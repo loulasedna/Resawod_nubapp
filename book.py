@@ -231,6 +231,4 @@ if __name__ == "__main__":
 		print("Mono user mode")
 		main(options.account, options.password)
 
-# TODO : add a way to book multiple slots at different time (picking in slots.json file)
-# TODO : create a first-connexion mode which grab the id_application & id_category_activity
 # TODO : clean up the code with a common_headers' dict
