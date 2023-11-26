@@ -9,7 +9,7 @@ import json
 # Variables
 application_id = '36307036' # Replace by your id_application
 
-with open('personal_data/users_moa.json') as json_file:
+with open('personal_data/users.json') as json_file:
 	data = json.load(json_file)
 
 
