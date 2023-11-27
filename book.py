@@ -10,8 +10,6 @@ import json
 application_id = '36307036' # Replace by your id_application
 category_activity_id = '2179' # Replace by your id_category_activity
 
-
-
 with open('personal_data/users.json') as json_file:
 	data = json.load(json_file)
 
@@ -239,7 +237,3 @@ if __name__ == "__main__":
 	else:
 		print("Mono user mode")
 		main(options.account, options.password)
-
-# TODO : add a way to book multiple slots at different time (picking in slots.json file)
-# TODO : create a first-connexion mode which grab the id_application & id_category_activity
-# TODO : clean up the code with a common_headers' dict
