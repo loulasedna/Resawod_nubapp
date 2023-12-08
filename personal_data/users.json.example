@@ -3,12 +3,28 @@
 		{
 			"name": "Bob",
 			"login": "bob@gmail.com",
-			"password": "super-duper-secret-password"
+			"password": "super-duper-secret-password",
+      "slots": [
+        "monday",
+        "wednesday"
+      ]
 		},
 		{
 			"name": "Alice",
 			"login": "alice@gmail.com",
-			"password": "nobody-cares"
+			"password": "nobody-cares",
+      "slots": [
+        "friday",
+        "saturday"
+      ]
 		}
-	]
+	],
+  "slots": {
+    "monday": "18:30:00",
+    "tuesday": "19:30:00",
+    "wednesday": "18:30:00",
+    "thursday": "19:30:00",
+    "friday": "18:30:00",
+    "saturday": "11:00:00"
+  }
 }

@@ -1,3 +1,4 @@
 env/
 test/
-personal_data/*.json
+personal_data/*
+!personal_data/*.example
